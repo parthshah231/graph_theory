@@ -1,7 +1,7 @@
-from typing import List, Tuple, Dict
+from typing import Dict, Set
 
 
-def printDepthFirst(graph: Dict, start_node, visited):
+def printDepthFirst(graph: Dict, start_node: str, visited: Set):
     if start_node in visited:
         return
     visited.add(start_node)

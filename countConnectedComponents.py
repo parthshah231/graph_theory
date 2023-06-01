@@ -1,10 +1,23 @@
-from typing import List, Tuple, Dict
+from typing import Dict, Set
 
 
-def countConnectedComponents(graph: Dict):
+def dfs(graph: Dict, node: str, visited: Set, components: Dict, count: int) -> bool:
+    stack = [node]
+    while len(stack) > 0:
+        curr = stack.pop()
+        if curr in visited:
+            return False
+        components[curr] = count + 1
+        visited.add(curr)
+        for neighbor in graph[curr]:
+            dfs(graph, neighbor, visited, components, count)
+
+    return True
+
+
+def countConnectedComponents(graph: Dict) -> int:
     count = 0
     visited = set()
-    # components = []
     components = {}
     for node in graph:
         if node in visited:
@@ -12,21 +25,6 @@ def countConnectedComponents(graph: Dict):
         count += dfs(graph, node, visited, components, count)
 
     return count, components
-
-
-def dfs(graph, node, visited, components, count):
-    stack = [node]
-    while len(stack) > 0:
-        curr = stack.pop()
-        if curr in visited:
-            return False
-        # components.append([curr, count])
-        components[curr] = count + 1
-        visited.add(curr)
-        for neighbor in graph[curr]:
-            dfs(graph, neighbor, visited, components, count)
-
-    return True
 
 
 if __name__ == "__main__":
